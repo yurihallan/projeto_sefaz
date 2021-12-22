@@ -10,7 +10,7 @@
         <class>classes.Usuario</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost:1521/test"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost:1521/sefaz_projeto"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

@@ -17,7 +17,7 @@ public class telefones {
     private String tipo;
 
     @Column(nullable = false)
-    private String ddd;
+    private Integer ddd;
 
 
 
@@ -45,18 +45,18 @@ public class telefones {
         this.tipo = tipo;
     }
 
-    public String getDdd() {
+    public Integer getDdd() {
         return ddd;
     }
 
-    public void setDdd(String ddd) {
+    public void setDdd(Integer ddd) {
         this.ddd = ddd;
     }
 
     public telefones() {
     }
 
-    public telefones(String numero, String tipo, String ddd) {
+    public telefones(String numero, String tipo, Integer ddd) {
         this.numero = numero;
         this.tipo = tipo;
         this.ddd = ddd;
