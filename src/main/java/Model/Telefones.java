@@ -1,9 +1,11 @@
 package Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class telefones {
+public class Telefones {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -16,10 +18,15 @@ public class telefones {
     @Column(nullable = false)
     private String tipo;
 
-    @Column(nullable = false)
+    @Column(nullable = false,length = 2)
     private Integer ddd;
 
+    @OneToMany(
+            mappedBy = "telefones",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
 
+    private List<Usuario> usuario = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -53,15 +60,21 @@ public class telefones {
         this.ddd = ddd;
     }
 
-    public telefones() {
+    public Telefones() {
     }
 
-    public telefones(String numero, String tipo, Integer ddd) {
+    public Telefones(String numero, String tipo, Integer ddd) {
         this.numero = numero;
         this.tipo = tipo;
         this.ddd = ddd;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Telefones{" +
+                "numero='" + numero + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", ddd=" + ddd +
+                '}';
+    }
 }

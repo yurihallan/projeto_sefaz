@@ -13,7 +13,7 @@ public class ConnectionFactory {
         throw new UnsupportedOperationException();
     }
 
-    public static Connection getConnection()  {
+    public static Connection getConnection() {
 
         Connection connection = null;
 
@@ -28,20 +28,20 @@ public class ConnectionFactory {
             String user = prop.getProperty("db.user.login");
             String password = prop.getProperty("db.user.password");
 
-            StringBuilder builder = new StringBuilder("jdbc:")
-                    .append(driver).append("://")
-                    .append(dataBaseAddress).append("/")
-                    .append(dataBaseName);
-
-            String connectionUrl = builder.toString();
+            String connectionUrl = "jdbc:" +
+                    driver + "://" +
+                    dataBaseAddress + "/" +
+                    dataBaseName;
 
             try {
                 connection = DriverManager.getConnection(connectionUrl,user,password);
+
+                System.out.println("Sucesso BD!");
+
             } catch (SQLException e){
                 System.out.println("Falha ao tentar criar conexao");
                 throw new RuntimeException(e);
             }
-
 
         } catch (IOException e){
             System.out.println("Falha ao tentar carregar arquivo de propriedades");

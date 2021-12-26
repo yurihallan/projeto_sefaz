@@ -1,7 +1,7 @@
 package repository;
 
 
-import Model.usuario;
+import Model.Usuario;
 import config.ConnectionFactory;
 
 import java.sql.Connection;
@@ -12,32 +12,42 @@ import java.util.List;
 
 public class usuarioRepository {
 
-    public List<usuario> list(){
-        List<usuario> usuarios = new ArrayList<>();
+    public List<Usuario> list(){
+        List<Usuario> usuarios = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.getConnection()) {
 
             //Preparar consulta SQL.
-            String sql = "SELECT * FROM usuario";
+            String sql = "SELECT u.id, " +
+                    "            u.nome, u.email, u.senha " +
+                    "       FROM usuario u";
 
             //Prepapar statement com os parâmentros recebidos
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            PreparedStatement psmt = conn.prepareStatement("select * from usuario");
             //executa consulta e armazena o retorno
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = psmt.executeQuery();
 
-            //Cria um objeto aluno e guarda na lista de alunos
+            //Cria um objeto usuario e guarda na lista de usuarios
             while(rs.next()){
-                int id = rs.getInt("id");
-                String nome = rs.getString("nome");
-                String email = rs.getString("email");
-                String senha = rs.getString("senha");
 
-//                alunos.add(new Aluno(
-//                    id,
-//                    nome,
-//                    email,
-//                    senha
-//                ));
+                        int id = rs.getInt("id");
+                        String nome = rs.getString("nome");
+                        String email = rs.getString("email");
+                        String senha = rs.getString("senha");
+                        String telefones = rs.getString("telefone_id");
+
+                usuarios.add(new Usuario(
+                        id,
+                        nome,
+                        email,
+                        senha,
+                        telefones
+                ));
+
+
+//                usuarios.add(usuario);
+
+
             }
 
         } catch (Exception e) {
