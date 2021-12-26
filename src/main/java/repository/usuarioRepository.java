@@ -7,6 +7,7 @@ import config.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,10 @@ public class usuarioRepository {
         try (Connection conn = ConnectionFactory.getConnection()) {
 
             //Preparar consulta SQL.
-            String sql = "SELECT u.id, " +
-                    "            u.nome, u.email, u.senha " +
-                    "       FROM usuario u";
+            String sql = "SELECT * FROM usuario ";
 
             //Prepapar statement com os parâmentros recebidos
-            PreparedStatement psmt = conn.prepareStatement("select * from usuario");
+            PreparedStatement psmt = conn.prepareStatement(sql);
             //executa consulta e armazena o retorno
             ResultSet rs = psmt.executeQuery();
 
@@ -45,9 +44,6 @@ public class usuarioRepository {
                 ));
 
 
-//                usuarios.add(usuario);
-
-
             }
 
         } catch (Exception e) {
@@ -56,5 +52,38 @@ public class usuarioRepository {
         }
 
         return usuarios;
+    }
+
+    public Usuario getById(int id){
+
+        Usuario usuario = new Usuario();
+
+        try(Connection conn = ConnectionFactory.getConnection()){
+            //Preparar consulta SQL
+            String sql = "SELECT * FROM usuario WHERE id = ?";
+
+            //Preparar statement com os parâmetros recebidos
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            //Executa consulta e armazena o retorno da consulta no objeto "rs".
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+//                usuario.setTelefones();
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println("Listagem de Usuario FALHOU!");
+            e.printStackTrace();
+        }
+
+
+        return  usuario;
     }
 }
